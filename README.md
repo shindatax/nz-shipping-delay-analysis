@@ -9,7 +9,7 @@
 
 Shipping delays are a significant operational risk across NZ sea freight, air cargo, and road logistics - driving up costs and eroding service levels. This project builds a machine learning pipeline to **predict delivery delays before they occur** and quantify their financial impact, enabling logistics and operations teams to prioritise the interventions with the highest ROI.
 
-**Key Finding:** 26.9% of NZ shipments are delayed, costing an estimated NZD 2.9M in operational overhead. A 10% reduction in lead time variability could save up to NZD 1.47M annually - equivalent to eliminating roughly 320 high-cost delay incidents per year.
+**Key Finding:** 26.9% of NZ shipments are delayed, costing an estimated NZD 2.92M in operational overhead. A 10% reduction in lead time variability could save up to NZD 1.47M annually - equivalent to eliminating roughly 320 high-cost delay incidents per year.
 
 ---
 
@@ -93,7 +93,7 @@ Synthetic dataset of 5,000 NZ shipments designed to reflect real logistics patte
 | **Random Forest** | **0.676** | **0.286** | **0.208** | Best AUC - selected |
 | Gradient Boosting | 0.649 | 0.269 | 0.208 | Similar to RF |
 
-**Why Random Forest?** All models were trained with `class_weight="balanced"` to address class imbalance (73% on-time vs 27% delayed). Random Forest achieved the highest AUC-ROC (0.676), making it the most reliable model for ranking shipments by delay risk. While Logistic Regression showed higher recall, AUC is the primary metric for an early warning system where consistent risk discrimination across the full score range matters most.
+**Why Random Forest?** All models were trained with `class_weight="balanced"` to address class imbalance (73% on-time vs 27% delayed). Random Forest achieved the highest AUC-ROC (0.676), making it the most reliable model for ranking shipments by delay risk. While Logistic Regression showed higher recall, AUC is the primary metric for an early warning system where consistent risk discrimination across the full score range matters most. Threshold tuning can be applied to increase recall at the expense of precision, depending on the operational risk tolerance of the deployment context. In operational settings, the model would be deployed with a probability threshold aligned to the organisation's tolerance for missed delays versus false alerts.
 
 ### 3. Regression - How many hours will it be delayed?
 
@@ -102,6 +102,8 @@ Synthetic dataset of 5,000 NZ shipments designed to reflect real logistics patte
 | Linear Regression | 11.16h | 0.185 |
 | Random Forest | 11.66h | 0.142 |
 | Gradient Boosting | 12.30h | 0.040 |
+
+*The low R² reflects inherent uncertainty in operational delays driven by external factors not fully captured in the dataset. The model provides directional insight rather than precise hour-level forecasting, which is sufficient for strategic planning purposes.*
 
 ---
 
@@ -117,7 +119,7 @@ Synthetic dataset of 5,000 NZ shipments designed to reflect real logistics patte
 | Medium | Weather Severity | 0.102 | Trigger weather-based routing protocol when severity index >7 |
 | Quick Win | Lead Time (days) | 0.101 | Tighten lead time planning windows to reduce variability |
 
-**Bottom line:** Addressing the top 2 drivers alone (port congestion + transport mode selection) could reduce the delay rate from 26.9% to an estimated 19-21%, saving NZD 800K-1.1M annually without capital investment.
+**Bottom line:** Addressing the top 2 drivers alone (port congestion + transport mode selection) could reduce the delay rate from 26.9% to an estimated 19-21% (based on scenario modelling), saving NZD 800K-1.1M annually without capital investment.
 
 ### Cost Saving Simulation
 
