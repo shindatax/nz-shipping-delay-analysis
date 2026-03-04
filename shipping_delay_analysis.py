@@ -393,7 +393,7 @@ print("\n[4/6] Training classification models...")
 models = {
     "Logistic Regression": LogisticRegression(max_iter=1000, random_state=42, class_weight="balanced"),
     "Random Forest": RandomForestClassifier(n_estimators=200, max_depth=12, random_state=42, n_jobs=-1, class_weight="balanced"),
-    "Gradient Boosting\n(XGBoost proxy)": GradientBoostingClassifier(
+    "Gradient Boosting\n(sklearn)": GradientBoostingClassifier(
         n_estimators=200, learning_rate=0.08, max_depth=5, random_state=42
     ),
 }
