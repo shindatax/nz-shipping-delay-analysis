@@ -91,7 +91,7 @@ Synthetic dataset of 5,000 NZ shipments designed to reflect real logistics patte
 |---|---|---|---|---|
 | Logistic Regression | 0.660 | 0.461 | 0.602 | Baseline, interpretable |
 | **Random Forest** | **0.676** | **0.286** | **0.208** | Best AUC - selected |
-| Gradient Boosting | 0.649 | 0.269 | 0.208 | Similar to RF |
+| Gradient Boosting (sklearn) | 0.649 | 0.269 | 0.208 | Similar to RF |
 
 **Why Random Forest?** All models were trained with `class_weight="balanced"` to address class imbalance (73% on-time vs 27% delayed). Random Forest achieved the highest AUC-ROC (0.676), making it the most reliable model for ranking shipments by delay risk. While Logistic Regression showed higher recall, AUC is the primary metric for an early warning system where consistent risk discrimination across the full score range matters most. Threshold tuning can be applied to increase recall at the expense of precision, depending on the operational risk tolerance of the deployment context. In operational settings, the model would be deployed with a probability threshold aligned to the organisation's tolerance for missed delays versus false alerts.
 
@@ -193,7 +193,7 @@ nz-shipping-delay-analysis/
 
 ## SQL Queries
 
-The `/sql` folder contains production-ready queries for operational reporting:
+The `/sql` folder contains production-ready queries for operational reporting, written for **PostgreSQL**:
 
 - `01_create_tables.sql` - Database schema with indexes
 - `02_kpi_queries.sql` - On-time rate, delay rate by port, cost by cargo type, seasonal patterns, carrier reliability impact
